@@ -1,0 +1,11 @@
+import React from 'react'
+const footerYear = new Date().getFullYear()
+const Footer = () => {
+  return (
+    <footer className='footer p-5 bg-gray-700 text-primary-content footer-center'>
+       <p>Copyright &copy; {footerYear}</p>
+    </footer>
+  )
+}
+
+export default Footer
