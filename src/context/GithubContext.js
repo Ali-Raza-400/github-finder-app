@@ -1,12 +1,15 @@
-import { Children, createContext, useState } from "react";
+import { createContext, useReducer } from "react";
+import GithubReducer from "./GithubReducer";
 const GithubContext=createContext()
 
 export const GithubProvider=({children})=>{
-    const [users,setUsers]=useState([])
-    const [loading,setLoading]=useState(false)
-
+    const initializerArg={
+        users:[],
+        loading:true 
+    }
+    const [state,dispatch]=useReducer(GithubReducer,initializerArg)
+    
     async function getGithubUserDetail() {
-        setLoading(true)
         try {
           const response = await fetch('https://api.github.com/users'
           );
@@ -15,14 +18,16 @@ export const GithubProvider=({children})=>{
             throw new Error('Error fetching data from the GitHub API');
           }
           const data = await response.json()
-          setUsers(data)
-          setLoading(false)
+          console.log("data",data)
+          dispatch({
+            type:"GET_USERS",
+            payload:data
+          })
         } catch (error) {
           console.error("Error fetching data:", error);
-          setLoading(true)
         }
       }
-
-      return <GithubContext.Provider value={{users,loading,getGithubUserDetail}}>{children}</GithubContext.Provider>
+      console.log("users",state.users)
+      return <GithubContext.Provider value={{users:state.users,loading:state.loading,getGithubUserDetail}}>{children}</GithubContext.Provider>
 }
 export default GithubContext
