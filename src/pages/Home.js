@@ -1,5 +1,6 @@
 import React, { useEffect, useState,useContext } from "react";
 import Spinner from "../components/layouts/Spinner";
+import Search from "../components/layouts/users/Search";
 import UserItem from "../components/layouts/users/userItems";
 import GithubContext from "../context/GithubContext";
 
@@ -10,14 +11,16 @@ const Home = () => {
     getGithubUserDetail()
   }, []);
   return    ( 
-    <div className="bg-black text-white">
-    {loading && <Spinner/> }
+    <div className="">
+    <Search/>
+    {/* {loading && <Spinner/> }
     {!loading && users.map(user=>{
    
       return (
-     <><UserItem user={user}/>
+     <>
+     <UserItem user={user}/>
      </>
-      )})}
+      )})} */}
     </div>
 
   )
